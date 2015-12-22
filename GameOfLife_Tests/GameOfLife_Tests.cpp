@@ -1,11 +1,22 @@
 #include "gtest/gtest.h"
 #include "GameOfLife.h"
 
-TEST(GameOfLife, Create_a_board_with_all_cells_dead)
+class GameOfLifeFixtures : public ::testing::Test
 {
+public:
 	GameOfLife life;
-	life.GridSetup();
 
+	GameOfLifeFixtures()
+	{
+		life.GridSetup();
+	}
+
+	~GameOfLifeFixtures()
+	{}
+};
+
+TEST_F(GameOfLifeFixtures, Create_a_board_with_all_cells_dead)
+{
 	for (int x = 0; x < 4; ++x)
 	{
 		for (int y = 0; y < 8; ++y)
@@ -15,21 +26,15 @@ TEST(GameOfLife, Create_a_board_with_all_cells_dead)
 	}
 }
 
-TEST(GameOfLife, Create_a_single_live_cell)
+TEST_F(GameOfLifeFixtures, Create_a_single_live_cell)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 2, 3);
 
 	EXPECT_TRUE(life.GameOfLifeGrid[2][3]);
 }
 
-TEST(GameOfLife, Any_live_cell_with_fewer_than_two_live_neighbours_dies)
+TEST_F(GameOfLifeFixtures, Any_live_cell_with_fewer_than_two_live_neighbours_dies)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 2, 3);
 
 	life.SetStateBasedOnNeighbours(2, 3);
@@ -37,11 +42,8 @@ TEST(GameOfLife, Any_live_cell_with_fewer_than_two_live_neighbours_dies)
 	EXPECT_FALSE(life.GameOfLifeGrid[2][3]);
 }
 
-TEST(GameOfLife, Any_live_cell_with_more_than_three_live_neighbours_dies)
+TEST_F(GameOfLifeFixtures, Any_live_cell_with_more_than_three_live_neighbours_dies)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 2, 3); // Cell to check (will die)
 
 	life.SetLiveState(true, 1, 2);
@@ -54,11 +56,8 @@ TEST(GameOfLife, Any_live_cell_with_more_than_three_live_neighbours_dies)
 	EXPECT_FALSE(life.GameOfLifeGrid[2][3]);
 }
 
-TEST(GameOfLife, Any_live_cell_with_2_live_neighbours_stays_alive)
+TEST_F(GameOfLifeFixtures, Any_live_cell_with_2_live_neighbours_stays_alive)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 2, 3); // Cell to check (will stay alive)
 
 	life.SetLiveState(true, 1, 2);
@@ -69,11 +68,8 @@ TEST(GameOfLife, Any_live_cell_with_2_live_neighbours_stays_alive)
 	EXPECT_TRUE(life.GameOfLifeGrid[2][3]);
 }
 
-TEST(GameOfLife, Any_live_cell_with_3_live_neighbours_stays_alive)
+TEST_F(GameOfLifeFixtures, Any_live_cell_with_3_live_neighbours_stays_alive)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 2, 3); // Cell to check (will stay alive)
 
 	life.SetLiveState(true, 1, 2);
@@ -85,11 +81,8 @@ TEST(GameOfLife, Any_live_cell_with_3_live_neighbours_stays_alive)
 	EXPECT_TRUE(life.GameOfLifeGrid[2][3]);
 }
 
-TEST(GameOfLife, Any_dead_cell_with_exactly_three_live_neighbours_becomes_alive)
+TEST_F(GameOfLifeFixtures, Any_dead_cell_with_exactly_three_live_neighbours_becomes_alive)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 1, 2);
 	life.SetLiveState(true, 3, 2);
 	life.SetLiveState(true, 3, 4);
@@ -99,11 +92,8 @@ TEST(GameOfLife, Any_dead_cell_with_exactly_three_live_neighbours_becomes_alive)
 	EXPECT_TRUE(life.GameOfLifeGrid[2][3]);
 }
 
-TEST(GameOfLife, Bounds_check_to_stop_going_outside_of_array_when_counting_neighbours)
+TEST_F(GameOfLifeFixtures, Bounds_check_to_stop_going_outside_of_array_when_counting_neighbours)
 {
-	GameOfLife life;
-	life.GridSetup();
-
 	life.SetLiveState(true, 3, 7);
 
 	life.SetStateBasedOnNeighbours(3, 7);
