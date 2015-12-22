@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>C:\Users\Zalensia\Documents\Visual Studio 2013\Projects\GameOfLife\gtest-1.7.0\include;C:\Users\Zalensia\Documents\Visual Studio 2013\Projects\GameOfLife\gtest-1.7.0;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\gtest-1.7.0;$(SolutionDir)\gtest-1.7.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemGroup />
